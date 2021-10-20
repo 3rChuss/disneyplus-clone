@@ -1,4 +1,6 @@
 import React from "react";
+import { Container } from "../globalStyledComponents";
+import Header from "./Header";
 import styled from "styled-components";
 
 const Hero = (props) => {
@@ -38,14 +40,6 @@ const Hero = (props) => {
   );
 };
 
-const Container = styled.section`
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  height: 100vh;
-`;
-
 const Content = styled.div`
   width: 100%;
   position: relative;
@@ -64,6 +58,10 @@ const Content = styled.div`
     margin-right: auto;
     margin-left: auto;
     align-content: center;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 80px;
   }
 `;
 
@@ -185,7 +183,7 @@ const SignUp = styled.a`
   border: 1px solid transparent;
   border-radius: 4px;
   text-transform: uppercase;
-  cursor: pointer;
+
   &:hover {
     background-color: #0483ee;
   }
