@@ -6,8 +6,6 @@ import { useHistory } from "react-router-dom";
 import { auth, provider, signInWithPopup } from "../middleware/firebase";
 import {
   selectUserName,
-  selectUserEmail,
-  selectUserAvatar,
   setUserLoginDetails,
 } from "../features/user/userSlice";
 
@@ -15,8 +13,6 @@ const LoginPage = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const userName = useSelector(selectUserName);
-  const userEmail = useSelector(selectUserEmail);
-  const userAvatar = useSelector(selectUserAvatar);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {

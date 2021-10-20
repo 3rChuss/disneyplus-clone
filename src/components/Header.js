@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useStore } from "react-redux";
+import { auth } from "../middleware/firebase";
+import { useStore, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setSignOutState } from "../features/user/userSlice";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
-  const store = useStore();
+  const store = useStore().getState();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({
     name: "",
     email: "",
     avatar: "",
   });
-  store.subscribe(() => setUser({ ...store.getState().user }));
+  useStore().subscribe(() => setUser({ ...store.user }));
 
   useEffect(() => {
-    setUser({ ...store.getState().user });
-  }, [store]);
+    setUser({ ...store.user });
+  }, [store.user]);
+
+  const handleAuth = () => {
+    if (user.name) {
+      auth.signOut().then(() => {
+        dispatch(setSignOutState());
+        history.push("/");
+      });
+    }
+  };
 
   return (
     <Nav>
@@ -50,7 +64,12 @@ const Header = () => {
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <UserImg src={user.avatar} />
+          <SignOut>
+            <UserImg src={user.avatar} />
+            <Dropdown>
+              <span onClick={handleAuth}>Sign out</span>
+            </Dropdown>
+          </SignOut>
         </>
       )}
     </Nav>
@@ -168,6 +187,48 @@ const Login = styled.a`
 
 const UserImg = styled.img`
   height: 100%;
+`;
+
+const Dropdown = styled.div`
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background-color: rgb(19, 19, 19);
+  border: 1px solid rgba(151, 151, 151, 0.34);
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
+  padding: 10px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  width: 100px;
+  opacity: 0;
+
+  &:hover {
+    background-color: rgb(151, 151, 151);
+    color: #000;
+    border-color: transparent;
+  }
+`;
+
+const SignOut = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  ${UserImg} {
+    border-radius: 50%;
+  }
+
+  &:hover {
+    ${Dropdown} {
+      opacity: 1;
+      transition-duration: 0.2s;
+    }
+  }
 `;
 
 export default Header;
