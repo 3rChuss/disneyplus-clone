@@ -29,5 +29,5 @@ const storage = getStorage(app);
 const db = getFirestore(app);
 const moviesStorage = ref(storage, "movies");
 
-export { auth, provider, moviesStorage, analytics, signInWithPopup };
+export { app, auth, provider, moviesStorage, analytics, signInWithPopup };
 export default db;

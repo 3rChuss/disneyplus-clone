@@ -1,4 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import db from "../middleware/firebase";
+import { setMovies } from "../features/movie/movieSlice";
+import { selectUserName } from "../features/user/userSlice";
+import { collection, getDocs } from "@firebase/firestore";
+
 import styled from "styled-components";
 import ImgSlider from "../components/Imgslider";
 import NewDisney from "../components/NewDisney";
@@ -6,22 +12,48 @@ import Originals from "../components/Originals";
 import Recommends from "../components/Recommends";
 import Trendings from "../components/Trendings";
 import Viewer from "../components/Viewer";
-import file from "../disneyPlusMoviesData.json";
-import db from "../middleware/firebase";
-import { collection, addDoc } from "firebase/firestore";
 
 const HomePage = () => {
-  // Object.entries(file.movies).forEach(async (movie) => {
-  //   await addDoc(collection(db, "movies"), {
-  //     backgrounImg: movie[1].backgroundImg,
-  //     cardImg: movie[1].cardImg,
-  //     description: movie[1].description,
-  //     subtitle: movie[1].subTitle,
-  //     title: movie[1].title,
-  //     titleImg: movie[1].titleImg,
-  //     type: movie[1].type,
-  //   });
-  // });
+  const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+  let recommend = [];
+  let newDisney = [];
+  let original = [];
+  let trending = [];
+
+  useEffect(() => {
+    try {
+      const data = getDocs(collection(db, "movies"));
+      data.then((movies) => {
+        movies.forEach((movie) => {
+          switch (movie.data().type.toLowerCase()) {
+            case "recommend":
+              recommend.push({ id: movie.id, ...movie.data() });
+              break;
+            case "new":
+              newDisney.push({ id: movie.id, ...movie.data() });
+              break;
+            case "original":
+              original.push({ id: movie.id, ...movie.data() });
+              break;
+            case "trending":
+              trending.push({ id: movie.id, ...movie.data() });
+              break;
+          }
+        });
+        dispatch(
+          setMovies({
+            recommend,
+            newDisney,
+            original,
+            trending,
+          }),
+        );
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [userName]);
 
   return (
     <Container>
