@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,6 +27,7 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const storage = getStorage(app);
 const db = getFirestore(app);
+const moviesStorage = ref(storage, "movies");
 
-export { auth, provider, storage, analytics, signInWithPopup };
+export { auth, provider, moviesStorage, analytics, signInWithPopup };
 export default db;
