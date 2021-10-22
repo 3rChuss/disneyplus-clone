@@ -3,28 +3,27 @@ import { auth } from "../middleware/firebase";
 import { useStore, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setSignOutState } from "../features/user/userSlice";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Header = () => {
   const store = useStore().getState();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    avatar: "",
-  });
+  const [user, setUser] = useState({});
   useStore().subscribe(() => setUser({ ...store.user }));
 
   useEffect(() => {
-    setUser({ ...store.user });
+    if (store.user.name) {
+      setUser({ ...store.user });
+    }
   }, [store.user]);
 
   const handleAuth = () => {
     if (user.name) {
       auth.signOut().then(() => {
+        user = {};
         dispatch(setSignOutState());
-        history.push("/");
+        history.replace("/");
       });
     }
   };
@@ -39,10 +38,10 @@ const Header = () => {
       ) : (
         <>
           <NavMenu>
-            <a href='/home'>
+            <Link to='/home'>
               <img src='/images/home-icon.svg' alt='HOME' />
               <span>HOME</span>
-            </a>
+            </Link>
             <a>
               <img src='/images/search-icon.svg' alt='SEARCH' />
               <span>SEARCH</span>
@@ -177,6 +176,7 @@ const Login = styled.a`
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: all 0.2s ease 0s;
+  visibility: ${window.location.pathname == "/login" ? "hidden" : "initial"};
 
   &:hover {
     background-color: #f9f9f9f9;

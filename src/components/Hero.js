@@ -1,6 +1,5 @@
 import React from "react";
 import { Container } from "../globalStyledComponents";
-import Header from "./Header";
 import styled from "styled-components";
 
 const Hero = (props) => {

@@ -39,6 +39,8 @@ const HomePage = () => {
             case "trending":
               trending.push({ id: movie.id, ...movie.data() });
               break;
+            default:
+              break;
           }
         });
         dispatch(

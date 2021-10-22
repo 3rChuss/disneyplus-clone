@@ -9,6 +9,7 @@ import LoginPage from "./pages/Login";
 import Header from "./components/Header";
 import "./App.css";
 import HomePage from "./pages/Home";
+import Details from "./pages/Details";
 
 function App(props) {
   return (
@@ -23,6 +24,9 @@ function App(props) {
         </Route>
         <Route path='/home'>
           <HomePage />
+        </Route>
+        <Route path='/details/:id/'>
+          <Details />
         </Route>
       </Switch>
     </Router>
