@@ -11,13 +11,13 @@ import { getStorage, ref } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBmtBGugcION7fKmkvG02qkxtpBPhOGm7A",
+  apiKey: "#####################",
   authDomain: "disney-clone-11d31.firebaseapp.com",
   projectId: "disney-clone-11d31",
   storageBucket: "disney-clone-11d31.appspot.com",
   messagingSenderId: "728584509740",
-  appId: "1:728584509740:web:8b2278c516823b4f2f7489",
-  measurementId: "G-Q50P5SWRY3",
+  appId: "#################",
+  measurementId: "###############",
 };
 
 // Initialize Firebase
