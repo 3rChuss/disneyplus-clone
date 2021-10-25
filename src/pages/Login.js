@@ -26,7 +26,7 @@ const LoginPage = (props) => {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        setUser(result);
+        setUser(result?.user);
       })
       .catch((err) => {
         console.log(err);
@@ -34,13 +34,15 @@ const LoginPage = (props) => {
   };
 
   const setUser = (user) => {
-    dispatch(
-      setUserLoginDetails({
-        name: user.displayName,
-        email: user.email,
-        avatar: user.photoURL,
-      }),
-    );
+    if (user) {
+      dispatch(
+        setUserLoginDetails({
+          name: user.displayName,
+          email: user.email,
+          avatar: user.photoURL,
+        }),
+      );
+    }
   };
 
   return (

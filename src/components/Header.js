@@ -6,26 +6,22 @@ import { setSignOutState } from "../features/user/userSlice";
 import { Link, useHistory } from "react-router-dom";
 
 const Header = () => {
-  const store = useStore().getState();
+  const userStore = useStore().getState().user;
   const dispatch = useDispatch();
   const history = useHistory();
-  const [user, setUser] = useState({});
-  useStore().subscribe(() => setUser({ ...store.user }));
+  const [user, setUser] = useState();
+  useStore().subscribe(() => setUser({ ...userStore }));
 
   useEffect(() => {
-    if (store.user.name) {
-      setUser({ ...store.user });
-    }
-  }, [store.user]);
+    if (userStore.email !== null) setUser({ ...userStore });
+  }, [userStore]);
 
   const handleAuth = () => {
-    if (user.name) {
-      auth.signOut().then(() => {
-        user = {};
-        dispatch(setSignOutState());
-        history.replace("/");
-      });
-    }
+    auth.signOut().then(() => {
+      dispatch(setSignOutState());
+      setUser(null);
+      history.replace("/");
+    });
   };
 
   return (
@@ -33,7 +29,7 @@ const Header = () => {
       <Logo>
         <img src='/images/logo.svg' alt='logo' />
       </Logo>
-      {!user.name ? (
+      {!user?.name ? (
         <Login href='/login'>Log In</Login>
       ) : (
         <>
@@ -64,7 +60,7 @@ const Header = () => {
             </a>
           </NavMenu>
           <SignOut>
-            <UserImg src={user.avatar} />
+            <UserImg src={user?.avatar} />
             <Dropdown>
               <span onClick={handleAuth}>Sign out</span>
             </Dropdown>
@@ -95,8 +91,7 @@ const Logo = styled.a`
   margin-top: 4px;
   max-height: 70px;
   font-size: 0;
-  display: inline-block;
-  img {
+  display: inline-block img {
     display: block;
     width: 100%;
   }
@@ -176,7 +171,7 @@ const Login = styled.a`
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: all 0.2s ease 0s;
-  visibility: ${window.location.pathname == "/login" ? "hidden" : "initial"};
+  visibility: ${window.location.pathname === "/login" ? "hidden" : "initial"};
 
   &:hover {
     background-color: #f9f9f9f9;
