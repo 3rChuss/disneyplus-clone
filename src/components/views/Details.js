@@ -2,7 +2,7 @@ import { doc, getDoc } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import db from "../middleware/firebase";
+import db from "../../middleware/firebase";
 
 export default function Details(props) {
   const { id } = useParams();

@@ -5,11 +5,11 @@ import {
   withRouter,
 } from "react-router-dom";
 import Hero from "./components/Hero";
-import LoginPage from "./pages/Login";
+import LoginPage from "./components/views/Login";
 import Header from "./components/Header";
 import "./App.css";
-import HomePage from "./pages/Home";
-import Details from "./pages/Details";
+import HomePage from "./components/views/Home";
+import Details from "./components/views/Details";
 
 function App(props) {
   return (

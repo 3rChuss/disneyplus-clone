@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { Container } from "../globalStyledComponents";
+import { Container } from "../../globalStyledComponents";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { auth, provider, signInWithPopup } from "../middleware/firebase";
+import { auth, provider, signInWithPopup } from "../../middleware/firebase";
 import {
   selectUserName,
   setUserLoginDetails,
-} from "../features/user/userSlice";
+} from "../../features/user/userSlice";
 
 const LoginPage = (props) => {
   const dispatch = useDispatch();

@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import db from "../middleware/firebase";
-import { setMovies } from "../features/movie/movieSlice";
-import { selectUserName } from "../features/user/userSlice";
+import db from "../../middleware/firebase";
+import { setMovies } from "../../features/movie/movieSlice";
+import { selectUserName } from "../../features/user/userSlice";
 import { collection, getDocs } from "@firebase/firestore";
 
 import styled from "styled-components";
-import ImgSlider from "../components/Imgslider";
-import NewDisney from "../components/NewDisney";
-import Originals from "../components/Originals";
-import Recommends from "../components/Recommends";
-import Trendings from "../components/Trendings";
-import Viewer from "../components/Viewer";
+import ImgSlider from "../Imgslider";
+import NewDisney from "../NewDisney";
+import Originals from "../Originals";
+import Recommends from "../Recommends";
+import Trendings from "../Trendings";
+import Viewer from "../Viewer";
 
 const HomePage = () => {
   const dispatch = useDispatch();
